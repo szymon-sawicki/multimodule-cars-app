@@ -1,0 +1,10 @@
+com\app\domain\car\Car.class
+com\app\domain\car\type\Color.class
+com\app\domain\car\converter\CarsJsonConverter.class
+com\app\domain\configs\validator\ValidatorException.class
+com\app\domain\car\CarValidator.class
+com\app\domain\car\Car$CarBuilder.class
+com\app\domain\car\CarUtil.class
+com\app\domain\configs\converter\JsonConverter.class
+com\app\domain\configs\converter\JsonConverterException.class
+com\app\domain\configs\validator\Validator.class
