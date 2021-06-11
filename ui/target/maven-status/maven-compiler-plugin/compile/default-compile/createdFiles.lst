@@ -1,0 +1,9 @@
+com\app\ui\config\JsonTransformer.class
+com\app\ui\config\TestSpringConfig.class
+com\app\ui\config\DevSpringConfig.class
+com\app\ui\config\type\ProfileType.class
+com\app\ui\config\AppSpringConfig.class
+com\app\ui\dto\ResponseDto$ResponseDtoBuilder.class
+com\app\ui\dto\ResponseDto.class
+com\app\ui\Routing.class
+com\app\ui\App.class

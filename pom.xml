@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.com.app</groupId>
+    <artifactId>multimodule-maven-com.app</artifactId>
+    <version>${revision}</version>
+
+    <modules>
+        <module>domain</module>
+        <module>service</module>
+        <module>ui</module>
+    </modules>
+
+    <!--
+        Moze przyjmowac dwie wartosc:
+
+        jar - jest to plik pom.xml normalnej aplikacji ktorej finalnym tworem bedzie jar
+        pom - jest to plik pom.xml ktory jest glownym plikiem zarzadzajacym aplikacja wielomodulowa
+    -->
+    <packaging>pom</packaging>
+
+
+    <!--
+        W glownym pliku konfiguracyjnym bedziemy mogli ustalic pewne stale ktore wykorzystamy pozniej
+        w innych modulach
+    -->
+    <properties>
+        <!-- PODSTAWOWE USTAWIENIA PROJEKTU -->
+        <!-- Ta stala pozwala okreslic wersje projektu -->
+        <revision>1.0</revision>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>16</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <!-- WYKAZ WERSJI DEPENDENCIES KTORE STOSUJEMY W PROJEKCIE -->
+        <lombok.version>1.18.20</lombok.version>
+        <gson.version>2.8.6</gson.version>
+        <spring.version>5.3.4</spring.version>
+        <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
+        <junit-platform-engine.version>1.7.0</junit-platform-engine.version>
+        <junit-platform-launcher.version>1.7.0</junit-platform-launcher.version>
+        <junit-jupiter-engine.version>5.7.0</junit-jupiter-engine.version>
+        <junit-vintage-engine.version>5.7.1</junit-vintage-engine.version>
+        <junit-jupiter-params.version>5.7.0</junit-jupiter-params.version>
+        <mockito-core.version>3.6.0</mockito-core.version>
+        <mockito-junit-jupiter.version>3.6.0</mockito-junit-jupiter.version>
+        <assertj-core.version>3.19.0</assertj-core.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <spark.version>2.9.2</spark.version>
+        <sl4j.version>1.7.30</sl4j.version>
+
+        <!-- WYKAZ PLUGINS KTORE STOSUJEMY W PROJEKCIE -->
+        <flatten.maven.plugin.version>1.1.0</flatten.maven.plugin.version>
+        <maven.enforcer.plugin.version>3.0.0-M3</maven.enforcer.plugin.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
+        <maven.assembly.plugin.version>3.2.0</maven.assembly.plugin.version>
+    </properties>
+
+    <!--
+        Konfiguracja BOM - Bill Of Materials
+        BOM to dwie sekcje dependencyManagement oraz pluginManagement w ktorych okreslamy jakie
+        dependnecy oraz jakie plugins chcemy uzywac w naszym projekcie
+        Ta sekcja nie dolaczac zadnych dependndencies oraz plugins do projektu tylko pozwala w jednym
+        miejscu zebarac wszystkie dependencies oraz plugins tak ze pozniej masz w jednym miejscu
+        co jest w twoim iw jakich wersjach a w kolejnych modulach dopiero dolaczasz konkretne
+        plugins lub dependencies
+    -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>${javax.annotation-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-engine</artifactId>
+                <version>${junit-platform-engine.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- pozwala integrowac twoje ide z mechanizmem testow jednostkowych -->
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-launcher</artifactId>
+                <version>${junit-platform-launcher.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- pozwala dolaczyc corowe typy i elementy JUnit 5 -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit-jupiter-engine.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- zapewnia kompatybilnosc wsteczna z JUnit 4 -->
+            <dependency>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
+                <version>${junit-vintage-engine.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- do testow parametryzowanych -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit-jupiter-params.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- dostarcza pewne dodatkowe mechanizmy testowania -->
+           <!-- MOCKITO -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-core.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- pozwala integorowac mockito z junit -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito-junit-jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- ASSERTJ  -->
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj-core.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- SPARK -->
+            <dependency>
+                <groupId>com.sparkjava</groupId>
+                <artifactId>spark-core</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <!-- Narzedzie do loggowania - uzywa tego spark -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${sl4j.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
+            </dependency>
+        <!-- pozwala integrowac twoje ide z mechanizmem testow jednostkowych -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            </dependency>
+        <!-- pozwala dolaczyc corowe typy i elementy JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            </dependency>
+        <!-- zapewnia kompatybilnosc wsteczna z JUnit 4 -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+        </dependency>
+        <!-- do testow parametryzowanych -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+        </dependency>
+        <!-- MOCKITO -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+        </dependency>
+        <!-- pozwala integorowac mockito z junit -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+        </dependency>
+        <!-- ASSERTJ  -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>${flatten.maven.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven.enforcer.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven.resources.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${maven.assembly.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!--
+            W tym miejscu zaczynam konfigurowac pluginy, ktore chce "fizycznie" dolaczyc do aplikacji
+        -->
+        <plugins>
+            <!--
+                Konfigurujemy w jakiejs wersji java bedziemy pisac kod i w jakiej wersji java oczekujemy
+                ze ten kod zostanie zbudowany
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!--
+                Dzieki temu pluginowi podczas budowania / zarzadzania twoja aplikacja masz dokladnie kontrolowane
+                czy wersje narzedzi ktore sa wtedy wykorzystywane sa w takich wersjach jak sobie zalozyles
+
+                Tutaj masz wykaz wszystkich dostepnych rules:
+                https://maven.apache.org/enforcer/enforcer-rules/index.html
+
+                Tutaj masz przyklady jak okreslac wersje:
+                https://maven.apache.org/enforcer/enforcer-rules/versionRanges.html
+            -->
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-env-requirements</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                &lt;!&ndash; WYMAGANA WERSJA JAVA -> MIN 11 &ndash;&gt;
+                                <requireJavaVersion>
+                                    <version>[${java.version},)</version>
+                                </requireJavaVersion>
+                                &lt;!&ndash; WYMAGANA WERSJA MAVEN -> MIN 3.5 &ndash;&gt;
+                                <requireMavenVersion>
+                                    <version>[3.5,)</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <configuration>
+                    <flattenMode>bom</flattenMode>
+                </configuration>
+                <executions>
+                    <!-- enable flattening -->
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <!-- ensure proper cleanup -->
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>--enable-preview</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
+
+<!--
+    Jak utworzy aplikacje:
+
+    1. Wybierz Maven ale nie zaznaczaj nic
+    2. Potem utworz group, artifact oraz version
+    3. Dodaj glowny plik pom.xml - pamietaj ustawic packaging na pom. Moesz usunac src.
+    4. Dodaj modul czyli kliknij prawym na katalog prjketu i wybierze New -> Module..
+
+    Jak uruchomic aplikacje:
+    - z poziomu glownego pliku pom.xml uruchamiamy projekt:
+    >> mvn clean install
+    UWAGA! Musisz miec zainstalowana java oraz maven na twoim systemie
+-->
