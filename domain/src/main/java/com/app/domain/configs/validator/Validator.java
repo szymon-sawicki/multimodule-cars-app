@@ -3,6 +3,11 @@ package com.app.domain.configs.validator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * interface used to validate objects
+ * @param <T> type of object to validate
+ */
+
 public interface Validator<T> {
 
     /**
