@@ -1,2 +1,7 @@
-C:\KMPROGRAMS\PRAKTYKA\Samochody\cars-app-managment\ui\src\test\java\com\app\extension\CarsServiceExtension.java
-C:\KMPROGRAMS\PRAKTYKA\Samochody\cars-app-managment\ui\src\test\java\com\app\service\CarsServiceTest.java
+C:\KMPROGRAMS\PRAKTYKA\multimodule-cars-app\ui\src\test\java\com\app\domain\car\CarUtilTest.java
+C:\KMPROGRAMS\PRAKTYKA\multimodule-cars-app\ui\src\test\java\com\app\domain\car\CarTest.java
+C:\KMPROGRAMS\PRAKTYKA\multimodule-cars-app\ui\src\test\java\com\app\extension\CarsServiceExtension.java
+C:\KMPROGRAMS\PRAKTYKA\multimodule-cars-app\ui\src\test\java\com\app\service\CarsServiceTest.java
+C:\KMPROGRAMS\PRAKTYKA\multimodule-cars-app\ui\src\test\java\com\app\extension\CarsJsonConverterExtension.java
+C:\KMPROGRAMS\PRAKTYKA\multimodule-cars-app\ui\src\test\java\com\app\domain\car\CarValidatorTest.java
+C:\KMPROGRAMS\PRAKTYKA\multimodule-cars-app\ui\src\test\java\com\app\domain\car\converter\CarsJsonConverterTest.java

@@ -1,6 +1,6 @@
 package com.app.domain.car.converter;
 
-import com.app.domain.extension.CarsJsonConverterExtension;
+import com.app.extension.CarsJsonConverterExtension;
 import com.app.domain.car.Car;
 import com.app.domain.car.type.Color;
 import lombok.RequiredArgsConstructor;

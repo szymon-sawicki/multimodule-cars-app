@@ -1,4 +1,4 @@
-package com.app.domain.extension;
+package com.app.extension;
 
 import com.app.domain.car.converter.CarsJsonConverter;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -15,7 +15,7 @@ public class CarsJsonConverterExtension implements ParameterResolver {
 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        var filename = "C:/Users/Dell/app/tests/cars.json";
+        var filename = "C:/Users/Dell/app/tests/cars1.json";
         return new CarsJsonConverter(filename);
     }
 

@@ -30,6 +30,11 @@ import static java.util.function.Function.*;
 import static java.util.stream.Collectors.*;
 import static com.app.domain.car.CarUtil.*;
 
+/**
+ * Main service class used to manage collection of cars. Cars are loaded from json file located under path in class field.
+ * @author Szymon Sawicki
+ */
+
 @Service
 public class CarsService {
 
@@ -43,6 +48,11 @@ public class CarsService {
         return cars;
     }
 
+    /**
+     * initialization method that take filepath from class field and converts data from json file to list of cars
+     * and assign it to cars field
+     */
+
     @PostConstruct
     private void init() {
        // >> java -jar --enable-preview ui/target/ui.jar
@@ -54,6 +64,11 @@ public class CarsService {
                 .collect(toList());
 
     }
+
+    /**
+     *
+     * @return list of all cars
+     */
 
     public List<Car> getAllCars() {
         return cars;

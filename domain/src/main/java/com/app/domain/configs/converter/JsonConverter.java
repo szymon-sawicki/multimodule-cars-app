@@ -10,6 +10,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Optional;
 
+/**
+ * Class used for converting data from/to json format. This class is wrapps  gson
+ * @param <T> type of object to convert
+ * @author Szymon Sawicki
+ */
+
 public abstract class JsonConverter<T> {
 
     private final String jsonFilename;

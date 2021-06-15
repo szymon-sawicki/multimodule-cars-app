@@ -7,12 +7,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * implementation of validator interface used to validate car objects
+ * @author Szymon Sawicki
+ */
+
 public class CarValidator implements Validator<Car> {
     @Override
     public Map<String, String> validate(Car car) {
-        var errors = new HashMap<String,String>();
+        var errors = new HashMap<String, String>();
 
-        if ( car == null ) {
+        if (car == null) {
             errors.put("car", "object is null");
             return errors;
         }
@@ -24,19 +29,19 @@ public class CarValidator implements Validator<Car> {
 
         var price = car.price;
         if (hasIncorrectPrice(price)) {
-            errors.put("price","price should be greater than 0");
+            errors.put("price", "price should be greater than 0");
         }
 
-        if(Objects.isNull(car.color)) {
-            errors.put("color","color is null");
+        if (Objects.isNull(car.color)) {
+            errors.put("color", "color is null");
         }
 
-        if(car.mileage < 0) {
-            errors.put("mileage","mileage should be greater than 0");
+        if (car.mileage < 0) {
+            errors.put("mileage", "mileage should be greater than 0");
         }
 
-        if(car.components.size() == 0) {
-            errors.put("components","components list cannot be empty");
+        if (car.components.size() == 0) {
+            errors.put("components", "components list cannot be empty");
         }
 
         return errors;
@@ -47,6 +52,8 @@ public class CarValidator implements Validator<Car> {
         return model == null || !model.matches("[A-Z]+");
     }
 
-    private boolean hasIncorrectPrice(BigDecimal price) {return price == null || price.compareTo(BigDecimal.ZERO) <= 0;}
+    private boolean hasIncorrectPrice(BigDecimal price) {
+        return price == null || price.compareTo(BigDecimal.ZERO) <= 0;
+    }
 
 }

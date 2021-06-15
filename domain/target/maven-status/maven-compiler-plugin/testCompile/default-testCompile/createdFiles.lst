@@ -1,5 +1,0 @@
-com\app\domain\car\CarUtilTest.class
-com\app\domain\extension\CarsJsonConverterExtension.class
-com\app\domain\car\CarTest.class
-com\app\domain\car\CarValidatorTest.class
-com\app\domain\car\converter\CarsJsonConverterTest.class

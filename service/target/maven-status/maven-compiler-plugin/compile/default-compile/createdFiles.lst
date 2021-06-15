@@ -1,4 +1,3 @@
-com\app\service\CarsServiceUtils.class
 com\app\service\type\SortItem.class
 com\app\service\CarsService$1.class
 com\app\service\exception\CarsServiceException.class

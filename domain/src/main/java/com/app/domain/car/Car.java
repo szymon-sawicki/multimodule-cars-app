@@ -14,6 +14,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
+
+/**
+ * Main domain class. Contains fields representing car properties and some methods used to return modified object.
+ * @author Szymon Sawicki
+ */
+
 public class Car {
     String model;
     BigDecimal price;
@@ -21,23 +27,46 @@ public class Car {
     int mileage;
     List<String> components;
 
+    /**
+     * @param mileage limit of results
+     * @return boolean value if the object's mileage is greater than given limit
+     */
 
     public boolean hasMileageGreaterThan(int mileage) {
         return this.mileage > mileage;
     }
 
+    /**
+     * @param colorToCheck
+     * @return boolean value if the auto has given color
+     */
+
     public boolean hasColor(Color colorToCheck) {
         return colorToCheck.equals(color);
     }
+
+    /**
+     * @param priceFrom lower range of price
+     * @param priceTo   higher range of price
+     * @return boolean value if car has price in given range
+     */
 
     public boolean hasPriceInRange(BigDecimal priceFrom, BigDecimal priceTo) {
         return price.compareTo(priceFrom) >= 0 && price.compareTo(priceTo) <= 0;
     }
 
+    /**
+     * @param component component to check
+     * @return boolean value if car contains given component
+     */
 
     public boolean hasComponent(String component) {
         return components.contains(component);
     }
+
+    /**
+     * @return new car object with sorted listof components
+     */
 
     public Car withSortedComponents() {
         return Car
